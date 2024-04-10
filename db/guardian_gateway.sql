@@ -172,3 +172,8 @@ VALUES (7,'Arman Coding Tutorials', 20, 'Learning any skill at a professional le
 
 INSERT INTO notifications (discountID, text, status)
 VALUES (5, 'Notification message about new promotions from emerging tech brands.', true);
+
+
+
+
+
