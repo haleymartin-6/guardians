@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into retailer (retailerID, name) values (1, 'GizmoGalaxy');
 insert into retailer (retailerID, name) values (2, 'TechTrendz');
 insert into retailer (retailerID, name) values (3, 'GizmoGalaxy');

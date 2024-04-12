@@ -1,6 +1,8 @@
 -- Create a new database called blogs
 CREATE DATABASE IF NOT EXISTS gateway;
 
+grant all privileges on gateway.* to 'webapp'@'%';
+flush privileges;
 -- Show databases
 SHOW DATABASES;
 

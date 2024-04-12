@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into customerDiscounts (customerID, discountID) values (2, 240);
 insert into customerDiscounts (customerID, discountID) values (14, 63);
 insert into customerDiscounts (customerID, discountID) values (18, 183);

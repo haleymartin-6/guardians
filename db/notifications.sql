@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into notifications (notificationID, discountID, text, status, dateTime) values (1, 220, 'Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.', true, '9/16/2013');
 insert into notifications (notificationID, discountID, text, status, dateTime) values (2, 232, 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.', true, '6/16/2001');
 insert into notifications (notificationID, discountID, text, status, dateTime) values (3, 232, 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo.', false, '2/25/2012');

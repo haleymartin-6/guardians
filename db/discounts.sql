@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into discounts (discountID, amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID) values (1, 69, null, null, 'DISCOUNT', '3/5/2028', 2, 8);
 insert into discounts (discountID, amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID) values (2, 62, '1/21/2002', false, 'CODE456', null, 14, 15);
 insert into discounts (discountID, amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID) values (3, 73, '7/8/2014', false, 'DISCOUNT', '10/25/2025', 21, 25);

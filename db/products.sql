@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into products (productID, brandID, name, cost, tutorial, productType) values (1, 27, 'DigitalDreamer 5000', 2485982675.27, null, 'Headphones');
 insert into products (productID, brandID, name, cost, tutorial, productType) values (2, 5, 'ElectroTech Max', 4452736811.07, null, 'Virtual Reality Headset');
 insert into products (productID, brandID, name, cost, tutorial, productType) values (3, 18, 'TechMaster 2000', 1934824213.88, null, 'Drone');

@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into brand (brandID, name, summary) values (1, 'CyberSolutions', null);
 insert into brand (brandID, name, summary) values (2, 'SmartWave', null);
 insert into brand (brandID, name, summary) values (3, 'CyberSolutions', 'Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.');

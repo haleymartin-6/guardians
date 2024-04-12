@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into discountsLiked (customerID, discountLiked) values (7, 3109);
 insert into discountsLiked (customerID, discountLiked) values (34, 4051);
 insert into discountsLiked (customerID, discountLiked) values (35, 6447);

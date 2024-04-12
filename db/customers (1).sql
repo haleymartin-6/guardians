@@ -1,3 +1,5 @@
+USE gateway;
+
 insert into customers (customerID, firstName, lastName, email1, email2, number, promotionScore) values (1, 'Shirleen', 'Luffman', 'sluffman0@globo.com', null, '834-205-0611', 6);
 insert into customers (customerID, firstName, lastName, email1, email2, number, promotionScore) values (2, 'Free', 'Megany', 'fmegany1@angelfire.com', null, '938-401-4164', 3);
 insert into customers (customerID, firstName, lastName, email1, email2, number, promotionScore) values (3, 'Isobel', 'Scoone', 'iscoone2@eventbrite.com', null, '677-917-1960', 3);
