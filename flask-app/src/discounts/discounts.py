@@ -4,13 +4,13 @@ from src import db
 
 discount = Blueprint('discount', __name__)
 
-@discount.route('/discount/<referralCode>', methods=['GET'])
-def get_discount(referralCode):
+@discount.route('/discount', methods=['GET'])
+def get_discount():
         # Get the database connection
         cursor = db.get_db().cursor()
 
         # Retrieve discounts associated with the referral code
-        cursor.execute('SELECT * FROM discounts WHERE referralCode = %s', (referralCode,))
+        cursor.execute('select discountID, amount, addedDate, expirationDate, retailerID, brandID from discounts')
         row_headers = [x[0] for x in cursor.description]
         json_data = []
 
