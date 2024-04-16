@@ -5,7 +5,7 @@ from src import db
 
 products = Blueprint('products', __name__)
 
-@discount.route('/products', methods=['GET'])
+@products.route('/products', methods=['GET'])
 def get_products():
         # Get the database connection
         cursor = db.get_db().cursor()
