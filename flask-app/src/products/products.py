@@ -40,13 +40,36 @@ def post_product():
         db.get_db().commit()
         return 'new product added!'
 
-@products.route('/products/<productID>', methods=['GET'])
-def get_one_product_info(productID):
+
+@products.route('/products-ids', methods=['GET'])
+def get_product_ids():
+    # Get the database connection
+    cursor = db.get_db().cursor()
+
+    query = 'SELECT productID FROM products ORDER BY productID ASC'
+    cursor.execute(query)
+
+    # Fetch all rows
+    theData = cursor.fetchall()
+
+    # Convert result into JSON format
+    json_data = [{'productID': row[0]} for row in theData]
+
+    # Create JSON response
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    
+    return the_response
+
+
+@products.route('/products/<productType>', methods=['GET'])
+def get_one_product_info(productType):
         # Get the database connection
         cursor = db.get_db().cursor()
 
-        query = 'SELECT * FROM products WHERE productID = %s'
-        values = (productID,)
+        query = 'SELECT * FROM products WHERE productType = %s'
+        values = (productType,)
         cursor.execute(query, values)
 
         row_headers = [x[0] for x in cursor.description]
