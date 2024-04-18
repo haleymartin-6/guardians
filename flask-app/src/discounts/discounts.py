@@ -207,3 +207,14 @@ def get_organize_discount(option):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+@discount.route('/delete-brand-discounts/<brandID>', methods=['DELETE'])
+def delete_brand_discounts(brandID):
+    query = 'DELETE FROM discounts WHERE brandID = %s'
+    values = (brandID,)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query, values)
+    db.get_db().commit()
+    
+    return 'Discounts for brand {} deleted successfully!'.format(brandID)
