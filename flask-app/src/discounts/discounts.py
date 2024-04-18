@@ -123,16 +123,15 @@ def put_discount():
         amount = discount_info['amount']
         addedDate = discount_info['addedDate']
         likes = discount_info['likes']
-        referralCode = discount_info['referralCode']
         expirationDate = discount_info['expirationDate']
         
 
         query = '''UPDATE discounts 
-                SET amount = %s, addedDate = %s, likes = %s, referralCode = %s, 
+                SET amount = %s, addedDate = %s, likes = %s, 
                         expirationDate = %s
                 WHERE discountID = %s'''
         cursor = db.get_db().cursor()
-        cursor.execute(query, (amount, addedDate, likes, referralCode, expirationDate, discountID))
+        cursor.execute(query, (amount, addedDate, likes, expirationDate, discountID))
         db.get_db().commit()
         return 'Discount updated successfully!'
 
