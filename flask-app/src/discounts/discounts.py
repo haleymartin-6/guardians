@@ -6,21 +6,33 @@ discount = Blueprint('discount', __name__)
 
 @discount.route('/discount', methods=['GET'])
 def get_discount():
-        # Get the database connection
-        cursor = db.get_db().cursor()
+    # Get the database connection
+    cursor = db.get_db().cursor()
 
-        # Retrieve discounts associated with the referral code
-        cursor.execute('select discountID, amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID from discounts')
-        row_headers = [x[0] for x in cursor.description]
-        json_data = []
+    # Define the base SQL query with joins
+    sql_query = '''
+        SELECT d.discountID, d.amount, d.addedDate, d.likes, d.referralCode, 
+                 d.expirationDate, b.name AS brand, pr.name AS product, r.name AS retailer
+        FROM discounts d
+        LEFT JOIN brand b ON d.brandID = b.brandID
+        LEFT JOIN products pr ON d.brandID = pr.brandID
+        LEFT JOIN retailer r ON d.retailerID = r.retailerID
+'''
 
-        theData = cursor.fetchall()
-        for row in theData:
-            json_data.append(dict(zip(row_headers, row)))
-        the_response = make_response(jsonify(json_data))
-        the_response.status_code = 200
-        the_response.mimetype = 'application/json'
-        return the_response
+
+    # Execute the SQL query
+    cursor.execute(sql_query)
+
+    # Fetch data and format it as JSON
+    row_headers = [x[0] for x in cursor.description]
+    json_data = [dict(zip(row_headers, row)) for row in cursor.fetchall()]
+
+    # Create the response
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 
 @discount.route('/discount', methods=['POST'])
 def post_discount():
@@ -153,7 +165,15 @@ def get_organize_discount(option):
     selected_option = option # Assuming you're passing the selected option via query parameter
 
     # Define the base SQL query
-    base_query = 'SELECT discountID, amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID FROM discounts'
+    base_query = '''
+        SELECT d.discountID, d.amount, d.addedDate, d.likes, d.referralCode, 
+                 d.expirationDate, b.name AS brand, pr.name AS product, r.name AS retailer
+        FROM discounts d
+        LEFT JOIN brand b ON d.brandID = b.brandID
+        LEFT JOIN products pr ON d.brandID = pr.brandID
+        LEFT JOIN retailer r ON d.retailerID = r.retailerID
+'''
+
     sql_query = ""
     # Modify the SQL query based on the selected option
     if selected_option == 'DATE':
