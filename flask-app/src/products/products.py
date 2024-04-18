@@ -84,11 +84,12 @@ def get_one_product_info(productType):
         return the_response
 
 
-@products.route('/products/<productID>', methods=['PUT'])
-def put_product(productID):
+@products.route('/products', methods=['PUT'])
+def put_product():
         # Get the database connection
         product_info = request.json
 
+        productID = product_info['productID']
         name = product_info['name']
         cost = product_info['cost']
         tutorial = product_info['tutorial']

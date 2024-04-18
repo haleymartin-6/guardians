@@ -12,7 +12,8 @@ def get_discount():
     # Define the base SQL query with joins
     sql_query = '''
         SELECT d.discountID, d.amount, d.addedDate, d.likes, d.referralCode, 
-                 d.expirationDate, b.name AS brand, pr.name AS product, r.name AS retailer
+                 d.expirationDate, b.name AS brand, pr.name AS product, r.name AS retailer,
+                 d.brandID, d.retailerID
         FROM discounts d
         LEFT JOIN brand b ON d.brandID = b.brandID
         LEFT JOIN products pr ON d.brandID = pr.brandID
@@ -42,14 +43,13 @@ def post_discount():
         amount = discount_info['amount']
         addedDate = discount_info['addedDate']
         likes = discount_info['likes']
-        referralCode = discount_info['referralCode']
         expirationDate = discount_info['expirationDate']
         retailerID = discount_info['retailerID']
         brandID = discount_info['brandID']
 
-        query = 'INSERT INTO discounts (amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID) VALUES (%s, %s, %s, %s, %s, %s, %s)'
+        query = 'INSERT INTO discounts (amount, addedDate, likes, expirationDate, retailerID, brandID) VALUES (%s, %s, %s, %s, %s, %s)'
         cursor = db.get_db().cursor()
-        cursor.execute(query, (amount, addedDate, likes, referralCode, expirationDate, retailerID, brandID))
+        cursor.execute(query, (amount, addedDate, likes, expirationDate, retailerID, brandID))
         db.get_db().commit()
         return 'new discount added!'
 
@@ -114,16 +114,27 @@ def get_retailer_discounts(retailerID):
         the_response.mimetype = 'application/json'
         return the_response
 
-@discount.route('/discount/<discountID>', methods=['PUT'])
-def put_discount(discountID):
+@discount.route('/discount', methods=['PUT'])
+def put_discount():
         # Get the database connection
+        discount_info = request.json
 
-        query = 'UPDATE discounts SET likes = true where discountID=%s'
-        values = (discountID,)
+        discountID = discount_info['discountID']
+        amount = discount_info['amount']
+        addedDate = discount_info['addedDate']
+        likes = discount_info['likes']
+        referralCode = discount_info['referralCode']
+        expirationDate = discount_info['expirationDate']
+        
+
+        query = '''UPDATE discounts 
+                SET amount = %s, addedDate = %s, likes = %s, referralCode = %s, 
+                        expirationDate = %s
+                WHERE discountID = %s'''
         cursor = db.get_db().cursor()
-        cursor.execute(query, values)
+        cursor.execute(query, (amount, addedDate, likes, referralCode, expirationDate, discountID))
         db.get_db().commit()
-        return 'new discount like updated!'
+        return 'Discount updated successfully!'
 
 @discount.route('/discount/<discountID>', methods=['DELETE'])
 def delete_discount(discountID):
@@ -167,7 +178,8 @@ def get_organize_discount(option):
     # Define the base SQL query
     base_query = '''
         SELECT d.discountID, d.amount, d.addedDate, d.likes, d.referralCode, 
-                 d.expirationDate, b.name AS brand, pr.name AS product, r.name AS retailer
+                 d.expirationDate, b.name AS brand, pr.name AS product, r.name AS retailer,
+                 d.retailerID, d.brandID
         FROM discounts d
         LEFT JOIN brand b ON d.brandID = b.brandID
         LEFT JOIN products pr ON d.brandID = pr.brandID
@@ -179,9 +191,9 @@ def get_organize_discount(option):
     if selected_option == 'DATE':
         sql_query = base_query + ' ORDER BY addedDate DESC'
     elif selected_option == 'BRAND':
-        sql_query = base_query + ' ORDER BY brandID'
+        sql_query = base_query + ' ORDER BY d.brandID'
     elif selected_option == 'RETAILER':
-        sql_query = base_query + ' ORDER BY retailerID'
+        sql_query = base_query + ' ORDER BY d.retailerID'
 
     # Execute the modified SQL query
     cursor.execute(sql_query)
